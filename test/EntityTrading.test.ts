@@ -48,13 +48,14 @@ describe('EntityTrading', function () {
     expect(listing.isActive).to.be.true;
   });
 
+
   it('should allow the seller to cancel the listing', async function () {
     await entityTrading.cancelListing(TOKEN_ID);
 
     const listingId = await entityTrading.listedTokenIds(TOKEN_ID);
     const listing = await entityTrading.listings(listingId);
     expect(listing.isActive).to.be.false;
-
+ 
     // Check if the NFT is transferred back to the owner
     const ownerBalance = await nft.balanceOf(owner.address);
     expect(ownerBalance).to.equal(1);

@@ -12,7 +12,6 @@ describe('DevFund', function () {
 
   before(async () => {
     [owner, user1, user2, user3] = await ethers.getSigners();
-
     devFund = await ethers.deployContract('DevFund');
   });
 
@@ -20,10 +19,10 @@ describe('DevFund', function () {
     const balanceBefore = await ethers.provider.getBalance(owner.address);
     await user2.sendTransaction({
       to: await devFund.getAddress(),
-      value: ethers.parseEther('1'),
+      value: ethers.parseEther('1.5'),
     });
     const balanceAfter = await ethers.provider.getBalance(owner.address);
-    expect(balanceAfter - balanceBefore).to.eq(ethers.parseEther('1'));
+    expect(balanceAfter - balanceBefore).to.eq(ethers.parseEther('1.5'));
   });
 
   it('should not add a dev from non-owner', async () => {
@@ -39,8 +38,10 @@ describe('DevFund', function () {
 
     await expect(devFund.addDev(user2.address, 5))
       .to.emit(devFund, 'AddDev')
-      .withArgs(user2.address, 5);
+      .withArgs(user2.address, 5);    
   });
+
+  
 
   it('should revert when the dev is already registered', async () => {
     await expect(devFund.addDev(user1.address, 5)).to.revertedWith(
@@ -63,6 +64,10 @@ describe('DevFund', function () {
     );
   });
 
+
+
+
+
   it('should claim successfully', async () => {
     const balanceBefore = await ethers.provider.getBalance(user1.address);
     await expect(devFund.connect(user1).claim())
@@ -84,7 +89,7 @@ describe('DevFund', function () {
   });
 
   it('add another dev with different weight', async () => {
-    await devFund.addDev(user3.address, 1);
+    await devFund.addDev(user3.address, 3);
 
     const prevBalance = await ethers.provider.getBalance(owner.address);
     await user1.sendTransaction({
@@ -93,7 +98,7 @@ describe('DevFund', function () {
     });
 
     const curBalance = await ethers.provider.getBalance(owner.address);
-    expect(await devFund.pendingRewards(user3.address)).to.eq('16');
+    expect(await devFund.pendingRewards(user3.address)).to.eq('36');
 
     expect(curBalance - prevBalance).to.be.eq('4');
   });

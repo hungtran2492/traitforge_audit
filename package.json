@@ -16,8 +16,8 @@
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.3",
     "@nomiclabs/hardhat-etherscan": "^3.1.8",
-    "@openzeppelin/contracts": "4.9.3",
-    "@typechain/ethers-v5": "^11.1.2",
+    "@openzeppelin/contracts": "^4.9.6",
+    "@typechain/ethers-v5": "^6.0.5",
     "@typechain/ethers-v6": "^0.4.0",
     "@typechain/hardhat": "^9.1.0",
     "@types/chai": "^4.3.11",
@@ -33,5 +33,8 @@
     "ts-node": "^10.9.2",
     "typechain": "^8.3.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "hardhat-tracer": "^3.0.3"
   }
 }
